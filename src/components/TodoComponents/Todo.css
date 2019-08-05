@@ -1,9 +1,0 @@
-.task {
-  width: 45%;
-  text-align: left;
-  margin: 1px 0;
-}
-
-.task.completed {
-  text-decoration: line-through;
-}

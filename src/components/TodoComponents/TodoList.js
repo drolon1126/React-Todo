@@ -6,11 +6,11 @@ import Todo from './Todo';
 const TodoList = props => {
 
   return (
-    <div className="todo-list">
+    <ul className="todo-list">
       {props.toDoList.map(task => (
         <Todo key={task.id} task={task} toggleTask={props.toggleTask} />
       ))}
-    </div>
+    </ul>
   );
 }
 
