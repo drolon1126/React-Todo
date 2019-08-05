@@ -48,7 +48,8 @@ class App extends React.Component {
       })
     });
   }
-  clearCompleted = () => {
+  clearCompleted = (e) => {
+    e.preventDefault();
     this.setState({
       toDoList: this.state.toDoList.filter(task => !task.completed)
     });
@@ -58,7 +59,7 @@ class App extends React.Component {
       <div>
         <h2>Welcome to your Todo App!</h2>
         <TodoList toDoList={this.state.toDoList} toggleTask={this.toggleTask}/>
-        <TodoForm addTask={this.addTask}/>
+        <TodoForm addTask={this.addTask} clearCompleted={this.clearCompleted}/>
       </div>
     );
   }
