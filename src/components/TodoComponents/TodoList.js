@@ -7,9 +7,19 @@ const TodoList = props => {
 
   return (
     <ul className="todo-list">
-      {props.toDoList.map(task => (
-        <Todo key={task.id} task={task} toggleTask={props.toggleTask} />
-      ))}
+      {props.toDoList.map(task => {
+        if(props.searchParam ==='' || task.task === props.searchParam){
+          return (
+            <Todo key={task.id} task={task} toggleTask={props.toggleTask} />
+          );
+        } else {
+          return(
+            <>
+            </>
+          );
+        }
+        })
+      } 
     </ul>
   );
 }

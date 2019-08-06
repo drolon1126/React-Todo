@@ -1,6 +1,7 @@
 import React from 'react';
 import TodoList from './components/TodoComponents/TodoList';
 import TodoForm from './components/TodoComponents/TodoForm';
+import SearchForm from './components/TodoComponents/SearchForm';
 import './App.css';
 
 const todoData = [
@@ -23,8 +24,15 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      toDoList: todoData,
+      toDoList: localStorage.getItem('toDoList') ? JSON.parse(localStorage.getItem('toDoList')) : todoData,
+      searchParam : '',
     }
+  }
+
+  searchTask = (taskName) => {
+    this.setState({
+      searchParam: taskName
+    })
   }
 
   addTask = (taskName) => {
@@ -33,33 +41,43 @@ class App extends React.Component {
       id: Date.now(),
       completed: false
     }
+    const tdl = [...this.state.toDoList, newTask];
     this.setState({
-      toDoList: [...this.state.toDoList, newTask]
+      toDoList: tdl
     })
+
+    localStorage.setItem('toDoList', JSON.stringify(tdl));
   }
   toggleTask = id => {
+    const tdl = this.state.toDoList.map(task => {
+      if (task.id === id) {
+        return {
+          ...task,
+          completed: !task.completed
+        };
+      } else return task;
+    })
     this.setState({
-      toDoList: this.state.toDoList.map(task => {
-        if (task.id === id) {
-          return {
-            ...task,
-            completed: !task.completed
-          };
-        } else return task;
-      })
+      toDoList: tdl
     });
+
+    localStorage.setItem('toDoList', JSON.stringify(tdl));
+
   }
   clearCompleted = (e) => {
     e.preventDefault();
+    const tdl = this.state.toDoList.filter(task => !task.completed)
     this.setState({
-      toDoList: this.state.toDoList.filter(task => !task.completed)
+      toDoList: tdl
     });
+    localStorage.setItem('toDoList', JSON.stringify(tdl));
   };
   render() {
     return (
       <div>
         <h2>Things To Do</h2>
-        <TodoList toDoList={this.state.toDoList} toggleTask={this.toggleTask}/>
+        <SearchForm searchTask={this.searchTask}/>
+        <TodoList toDoList={this.state.toDoList} toggleTask={this.toggleTask} searchParam={this.state.searchParam}/>
         <TodoForm addTask={this.addTask} clearCompleted={this.clearCompleted}/>
       </div>
     );
