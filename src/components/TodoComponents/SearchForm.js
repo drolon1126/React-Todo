@@ -1,6 +1,6 @@
 import React from 'react';
 
-class TodoForm extends React.Component {
+class SearchForm extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -14,7 +14,7 @@ class TodoForm extends React.Component {
   }
   submitTask = e => {
     e.preventDefault();
-    this.props.addTask(this.state.task);
+    this.props.searchTask(this.state.task);
   }
   render() {
     return (
@@ -24,13 +24,10 @@ class TodoForm extends React.Component {
             value={this.state.task}
             name='task'
             onChange={this.handleChange}
-            placeholder='Add New Task...'
+            placeholder='Search...'
           />
-          <button className="add-btn">
-            Add
-          </button>
-          <button className="clear-btn" onClick={this.props.clearCompleted}>
-            Clear Completed
+          <button className="search-btn">
+            Search
           </button>
         </form>
     );
@@ -38,4 +35,4 @@ class TodoForm extends React.Component {
 }
 
 
-export default TodoForm;
+export default SearchForm;
